@@ -1,4 +1,4 @@
-@ApiStatus.Internal
+@NullMarked
 package net.azureaaron.legacyitemdfu.fixers.fixes;
 
-import org.jetbrains.annotations.ApiStatus;
+import org.jspecify.annotations.NullMarked;

@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Stream;
 
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import com.google.common.collect.ImmutableMap;
 import com.mojang.datafixers.DSL;
@@ -143,8 +143,7 @@ public class AttributeIdFix extends DataFix {
 				itemStackTyped -> itemStackTyped.updateTyped(componentsFinder, componentsTyped -> componentsTyped.update(DSL.remainderFinder(), AttributeIdFix::fixItemStack)));
 	}
 
-	@Nullable
-	private static UUID getUuidFromIntArray(int[] uuidArray) {
+	private static @Nullable UUID getUuidFromIntArray(int[] uuidArray) {
 		return uuidArray.length != 4
 			? null
 			: new UUID((long)uuidArray[0] << 32 | (long)uuidArray[1] & 4294967295L, (long)uuidArray[2] << 32 | (long)uuidArray[3] & 4294967295L);

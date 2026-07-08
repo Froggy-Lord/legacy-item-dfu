@@ -5,7 +5,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
@@ -446,8 +446,7 @@ public class TheFlatteningFix extends DataFix {
 				});
 	}
 
-	@Nullable
-	private static String getItem(@Nullable String originalName, int damage) {
+	private static @Nullable String getItem(@Nullable String originalName, int damage) {
 		if (ORIGINAL_ITEM_NAMES.contains(originalName)) {
 			String flattenedId = FLATTENING_MAP.get(originalName + "." + damage);
 

@@ -1,4 +1,4 @@
-@ApiStatus.Internal
+@NullMarked
 package net.azureaaron.legacyitemdfu.schemas;
 
-import org.jetbrains.annotations.ApiStatus;
+import org.jspecify.annotations.NullMarked;

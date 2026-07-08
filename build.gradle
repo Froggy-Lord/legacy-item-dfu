@@ -16,7 +16,7 @@ repositories {
 
 dependencies {
 	api "com.mojang:datafixerupper:${project.dfu_version}"
-	compileOnlyApi "org.jetbrains:annotations:${project.annotations_version}"
+	api "org.jspecify:jspecify:${project.jspecify_version}"
 
 	testImplementation(platform('org.junit:junit-bom:5.10.3'))
 	testImplementation('org.junit.jupiter:junit-jupiter')
@@ -28,14 +28,14 @@ base {
 }
 
 tasks.withType(JavaCompile).configureEach {
-	it.options.release = 21
+	it.options.release = 25
 }
 
 java {
 	withSourcesJar()
 
-	sourceCompatibility = JavaVersion.VERSION_21
-	targetCompatibility = JavaVersion.VERSION_21
+	sourceCompatibility = JavaVersion.VERSION_25
+	targetCompatibility = JavaVersion.VERSION_25
 }
 
 test {
@@ -43,8 +43,11 @@ test {
 }
 
 jar {
+	def archivesName = project.base.archivesName
+	inputs.property "archivesName", archivesName.get()
+
 	from("LICENSE") {
-		rename { "${it}_${base.archivesName.get()}"}
+		rename { "${it}_${archivesName.get()}" }
 	}
 }
 
@@ -61,7 +64,7 @@ publishing {
 
 	repositories {
 		maven {
-			url = "https://maven.azureaaron.net/" + (System.getenv("LEGACY_ITEM_DFU_RELEASE") != null ? "releases" : "snapshots");
+			url = "https://maven.azureaaron.net/releases"
 
 			credentials(PasswordCredentials) {
 				username = System.getenv("AARON_MAVEN_USER");

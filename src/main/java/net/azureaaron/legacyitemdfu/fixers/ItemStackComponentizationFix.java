@@ -10,7 +10,7 @@ import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import com.google.common.base.Splitter;
 import com.mojang.datafixers.DataFix;
@@ -178,7 +178,7 @@ public class ItemStackComponentizationFix extends DataFix {
 			data.moveToComponent("map", "minecraft:map_id");
 			Map<? extends Dynamic<?>, ? extends Dynamic<?>> map = data.getAndRemove("Decorations").asStream()
 					.map(ItemStackComponentizationFix::fixMapDecorations)
-					.collect(Collectors.toMap(Pair::getFirst, Pair::getSecond, (dynamicx, dynamic2) -> dynamicx));
+					.collect(Collectors.toMap(Pair::getFirst, Pair::getSecond, (dynamicx, _) -> dynamicx));
 			if (!map.isEmpty()) {
 				data.setComponent("minecraft:map_decorations", dynamic.createMap(map));
 			}
@@ -578,8 +578,7 @@ public class ItemStackComponentizationFix extends DataFix {
 		data.setComponent("minecraft:written_book_content", writtenBookContentComponent);
 	}
 
-	@Nullable
-	private static Dynamic<?> fixBookPages(ItemStackComponentizationFix.StackData data, Dynamic<?> dynamic) {
+	private static @Nullable Dynamic<?> fixBookPages(ItemStackComponentizationFix.StackData data, Dynamic<?> dynamic) {
 		List<String> pages = data.getAndRemove("pages").asList(pagesDynamic -> pagesDynamic.asString(""));
 		Map<String, String> filteredPages = data.getAndRemove("filtered_pages")
 			.asMap(filteredPagesKeyDynamic -> filteredPagesKeyDynamic.asString("0"), filteredPagesValueDynamic -> filteredPagesValueDynamic.asString(""));
